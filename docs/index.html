@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutlu — Interactive Guides to Discover the World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #3D3DF5; --blue-dark: #2828CC; --blue-light: #E8E8FF;
+    --white: #FFFFFF; --off: #F5F5FF; --gray: #6B6B80; --dark: #0D0D1A; --text: #1A1A2E;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(61,61,245,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--blue); letter-spacing: -0.5px; text-decoration: none; }
+  .nav-logo img { width: 38px; height: 38px; border-radius: 9px; }
+  .nav-right { display: flex; gap: 2rem; align-items: center; }
+  nav a { font-size: 0.9rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  nav a:hover { color: var(--blue); }
+  .nav-cta { background: var(--blue); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 100px; font-weight: 500; transition: background 0.2s, transform 0.15s !important; }
+  .nav-cta:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+
+  /* LANG SWITCHER */
+  .lang-switcher { display: flex; gap: 4px; background: var(--off); border-radius: 100px; padding: 3px; }
+  .lang-btn {
+    border: none; background: transparent; cursor: pointer;
+    font-size: 0.78rem; font-weight: 600; color: var(--gray);
+    padding: 0.25rem 0.6rem; border-radius: 100px;
+    transition: background 0.15s, color 0.15s; font-family: 'DM Sans', sans-serif;
+  }
+  .lang-btn.active { background: var(--blue); color: white; }
+  .lang-btn:hover:not(.active) { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 8rem 4rem 4rem; gap: 3rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -20%; right: -10%; width: 60%; height: 100%;
+    background: radial-gradient(ellipse at center, #E8E8FF 0%, transparent 70%); pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px; background: var(--blue-light); color: var(--blue);
+    padding: 0.35rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.5px;
+    margin-bottom: 1.5rem; animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge span { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; display: block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -2px; color: var(--dark); margin-bottom: 1.25rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 em { color: var(--blue); font-style: normal; }
+  .hero-sub { font-size: 1.1rem; color: var(--gray); line-height: 1.7; max-width: 480px; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: var(--white); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(61,61,245,0.3); }
+  .btn-primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(61,61,245,0.4); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid rgba(61,61,245,0.3); color: var(--blue); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
+  .btn-secondary:hover { border-color: var(--blue); background: var(--blue-light); transform: translateY(-2px); }
+
+  /* PHONE MOCKUP */
+  .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; animation: fadeUp 0.8s 0.4s ease both; }
+  .phone-frame { width: 280px; height: 560px; background: var(--dark); border-radius: 44px; padding: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1); transform: rotate(3deg); transition: transform 0.3s; }
+  .phone-frame:hover { transform: rotate(0deg); }
+  .phone-screen { width: 100%; height: 100%; background: var(--off); border-radius: 34px; overflow: hidden; }
+  .phone-header { background: var(--blue); color: white; padding: 1.2rem 1rem 0.8rem; display: flex; align-items: center; justify-content: space-between; }
+  .phone-header-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  .phone-map { height: 180px; background: #e8e8f0; overflow: hidden; }
+  .phone-map svg { width: 100%; height: 100%; }
+  .phone-stops { padding: 0.75rem; display: flex; flex-direction: column; }
+  .stop-item { display: flex; align-items: center; padding: 0.7rem 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.07); }
+  .stop-item:last-child { border-bottom: none; }
+  .stop-num { width: 22px; height: 22px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; margin-right: 8px; }
+  .stop-name { flex: 1; font-weight: 500; color: var(--text); font-size: 0.78rem; }
+  .stop-time { color: var(--gray); font-size: 0.7rem; margin-right: 6px; }
+  .play-btn { width: 26px; height: 26px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .play-btn::after { content: ''; border-left: 7px solid white; border-top: 4px solid transparent; border-bottom: 4px solid transparent; margin-left: 2px; }
+  .float-badge { position: absolute; background: white; border-radius: 16px; padding: 0.5rem 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.12); font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .badge-left { left: -60px; top: 30%; animation: float 4s ease-in-out infinite; }
+  .badge-right { right: -50px; bottom: 30%; animation: float 4s ease-in-out infinite reverse; animation-delay: 2s; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .badge-dot { width: 8px; height: 8px; border-radius: 50%; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTIONS */
+  .section { padding: 6rem 4rem; }
+  .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--dark); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1rem; }
+  .section-sub { color: var(--gray); font-size: 1.05rem; line-height: 1.7; max-width: 540px; margin-bottom: 3rem; }
+
+  /* FEATURES */
+  .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .feature-card { background: var(--off); border-radius: 20px; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(61,61,245,0.1); }
+  .feature-icon { width: 48px; height: 48px; background: var(--blue); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+  .feature-icon svg { width: 24px; height: 24px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .feature-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--dark); margin-bottom: 0.5rem; }
+  .feature-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.65; }
+
+  /* HOW IT WORKS */
+  .how-bg { background: var(--dark); }
+  .how-bg .section-label { color: #9898FF; }
+  .how-bg .section-title { color: white; }
+  .how-bg .section-sub { color: rgba(255,255,255,0.55); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .step-num { font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800; color: rgba(255,255,255,0.06); line-height: 1; margin-bottom: 0.5rem; }
+  .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: white; margin-bottom: 0.5rem; }
+  .step-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* CITIES */
+  .cities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .city-card { border-radius: 20px; overflow: hidden; position: relative; height: 220px; cursor: pointer; transition: transform 0.2s; }
+  .city-card:hover { transform: scale(1.02); }
+  .city-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+  .city-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,26,0.8) 0%, transparent 60%); }
+  .city-info { position: absolute; bottom: 1.25rem; left: 1.25rem; right: 1.25rem; display: flex; align-items: flex-end; justify-content: space-between; }
+  .city-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: white; }
+  .city-routes { color: rgba(255,255,255,0.6); font-size: 0.78rem; }
+  .city-tag { background: var(--blue); color: white; font-size: 0.72rem; font-weight: 500; padding: 0.25rem 0.75rem; border-radius: 100px; }
+  .city-card-barna { background: linear-gradient(135deg, #1a1a3e 0%, #3D3DF5 100%); }
+  .city-card-beijing { background: linear-gradient(135deg, #2a1a1a 0%, #c0392b 100%); }
+
+  /* CTA */
+  .cta-section { background: var(--blue); padding: 6rem 4rem; text-align: center; }
+  .cta-section h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.5rem); color: white; letter-spacing: -2px; margin-bottom: 1rem; }
+  .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 2.5rem; }
+  .btn-white { display: inline-flex; align-items: center; gap: 8px; background: white; color: var(--blue); padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: white; }
+  .footer-logo img { width: 32px; height: 32px; border-radius: 7px; }
+  footer p { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: #9898FF; }
+
+  @media (max-width: 1000px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 6rem 2rem 4rem; text-align: center; }
+    .hero-sub { margin: 0 auto 2.5rem; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .cities-grid { grid-template-columns: 1fr; }
+    .section { padding: 4rem 2rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .nav-right a:not(.nav-cta):not(.lang-btn) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="data:image/png;base64,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" alt="Rutlu logo">
+    RUTLU
+  </a>
+  <div class="nav-right">
+    <a href="#features" data-i18n="nav_features">Features</a>
+    <a href="#cities" data-i18n="nav_cities">Cities</a>
+    <a href="#howworks" data-i18n="nav_how">How it works</a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ca')">CA</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="#download" class="nav-cta" data-i18n="nav_download">Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span></span><span data-i18n="badge">Now available on Google Play</span></div>
+    <h1 data-i18n="h1">Discover the world<br>with <em>interactive</em><br>audio guides</h1>
+    <p class="hero-sub" data-i18n="hero_sub">Rutlu turns every street into a story. Explore cities at your own pace with audio guides — no guides, no groups, just you and the world.</p>
+    <div class="hero-btns">
+      <a href="#download" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+        <span data-i18n="btn_get">Get the App</span>
+      </a>
+      <a href="#cities" class="btn-secondary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <span data-i18n="btn_cities">Explore cities</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div style="position:relative;">
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-header">
+            <div class="phone-header-title">La Rambla</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </div>
+          <div class="phone-map">
+            <svg viewBox="0 0 256 180" xmlns="http://www.w3.org/2000/svg">
+              <rect width="256" height="180" fill="#e8eaf0"/>
+              <line x1="0" y1="90" x2="256" y2="90" stroke="#c8cad8" stroke-width="12"/>
+              <line x1="60" y1="0" x2="60" y2="180" stroke="#d0d2e0" stroke-width="6"/>
+              <line x1="120" y1="0" x2="120" y2="180" stroke="#d0d2e0" stroke-width="6"/>
+              <line x1="180" y1="0" x2="180" y2="180" stroke="#d0d2e0" stroke-width="6"/>
+              <line x1="0" y1="45" x2="256" y2="45" stroke="#d8dae8" stroke-width="4"/>
+              <line x1="0" y1="135" x2="256" y2="135" stroke="#d8dae8" stroke-width="4"/>
+              <polyline points="30,30 80,60 100,90 130,100 160,80 200,140" stroke="#3D3DF5" stroke-width="3" stroke-dasharray="6,3" fill="none"/>
+              <circle cx="30" cy="30" r="8" fill="#3D3DF5"/><text x="30" y="34" text-anchor="middle" font-size="9" fill="white" font-weight="bold">1</text>
+              <circle cx="80" cy="60" r="8" fill="#3D3DF5"/><text x="80" y="64" text-anchor="middle" font-size="9" fill="white" font-weight="bold">2</text>
+              <circle cx="130" cy="100" r="8" fill="#3D3DF5"/><text x="130" y="104" text-anchor="middle" font-size="9" fill="white" font-weight="bold">3</text>
+              <circle cx="200" cy="140" r="8" fill="#3D3DF5"/><text x="200" y="144" text-anchor="middle" font-size="9" fill="white" font-weight="bold">4</text>
+            </svg>
+          </div>
+          <div class="phone-stops">
+            <div class="stop-item"><div class="stop-num">0</div><div><div class="stop-name">Introduction – La Rambla</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
+            <div class="stop-item"><div class="stop-num">1</div><div><div class="stop-name">Plaça de Catalunya</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
+            <div class="stop-item"><div class="stop-num">2</div><div><div class="stop-name">Canaletes Fountain</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
+            <div class="stop-item"><div class="stop-num">3</div><div><div class="stop-name">La Boqueria Market</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="float-badge badge-left"><div class="badge-dot" style="background:#3D3DF5;"></div>7 stops · 2.3 km</div>
+      <div class="float-badge badge-right"><div class="badge-dot" style="background:#22c55e;"></div><span data-i18n="badge_audio">Audio in 6 languages</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-label" data-i18n="feat_label">Why Rutlu</div>
+  <h2 class="section-title" data-i18n="feat_title">Travel smarter,<br>explore deeper</h2>
+  <p class="section-sub" data-i18n="feat_sub">Built for curious travellers who want the stories behind the sights — without crowds, schedules, or headphone tour groups.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+      <div class="feature-title" data-i18n="f1_title">Professional narration</div>
+      <p class="feature-desc" data-i18n="f1_desc">Curated scripts, engaging storytelling. Real narratives that bring history to life — not a Wikipedia reading.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="feature-title" data-i18n="f2_title">Go at your own pace</div>
+      <p class="feature-desc" data-i18n="f2_desc">Pause, rewind, skip — you control the experience. Stop for a coffee, take photos, explore a side street.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <div class="feature-title" data-i18n="f3_title">Multiple languages</div>
+      <p class="feature-desc" data-i18n="f3_desc">Audio guides available in English, Spanish, Catalan and more — every visitor feels at home in any city.</p>
+    </div>
+    <div class="feature-card" style="background:var(--blue);">
+      <div class="feature-icon" style="background:rgba(255,255,255,0.15);"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="feature-title" style="color:white;" data-i18n="f4_title">AI Generator</div>
+      <p class="feature-desc" style="color:rgba(255,255,255,0.7);" data-i18n="f4_desc">Use AI to generate a custom audio guide for any place you want to visit — in seconds, in your language.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg" id="howworks">
+  <div class="section-label" data-i18n="how_label">How it works</div>
+  <h2 class="section-title" data-i18n="how_title">Three steps to explore</h2>
+  <p class="section-sub" style="margin-bottom:4rem;" data-i18n="how_sub">From install to first story in under a minute.</p>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title" data-i18n="s1_title">Download the app</div>
+      <p class="step-desc" data-i18n="s1_desc">Available on Android. iOS coming soon. Free to install with a growing catalogue of audio guides.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title" data-i18n="s2_title">Pick a city & guide</div>
+      <p class="step-desc" data-i18n="s2_desc">Browse audio guides by city and neighbourhood. Choose your language and press play.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title" data-i18n="s3_title">Walk & listen</div>
+      <p class="step-desc" data-i18n="s3_desc">Put your phone in your pocket. Discover the stories behind every corner at your own pace.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CITIES -->
+<section class="section" id="cities">
+  <div class="section-label" data-i18n="cities_label">Available now</div>
+  <h2 class="section-title" data-i18n="cities_title">Cities to explore</h2>
+  <p class="section-sub" data-i18n="cities_sub">Starting with two iconic cities and growing fast. More destinations every month.</p>
+  <div class="cities-grid">
+    <div class="city-card city-card-barna"><div class="city-bg">🏛️</div><div class="city-overlay"></div><div class="city-info"><div><div class="city-name">Barcelona</div><div class="city-routes">La Rambla · Gòtic · Gràcia</div></div><div class="city-tag" data-i18n="available">Available</div></div></div>
+    <div class="city-card city-card-beijing"><div class="city-bg">🏮</div><div class="city-overlay"></div><div class="city-info"><div><div class="city-name">Beijing</div><div class="city-routes">Forbidden City · Hutongs</div></div><div class="city-tag" data-i18n="available">Available</div></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+  <h2 data-i18n="cta_title">Start your first guide today</h2>
+  <p data-i18n="cta_sub">Free to download. No registration needed to explore.</p>
+  <a href="https://play.google.com/store" class="btn-white" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3D3DF5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+    <span data-i18n="cta_btn">Download on Google Play</span>
+  </a>
+  <div style="margin-top:1.5rem;">
+    <a href="https://linkedin.com" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.88rem;display:inline-flex;align-items:center;gap:6px;" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      <span data-i18n="linkedin">Follow us on LinkedIn</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo"><img src="data:image/png;base64,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" alt="Rutlu"> RUTLU</div>
+    <p style="margin-top:0.4rem;margin-left:42px;" data-i18n="footer_tag">Interactive Guides to Discover the World.</p>
+  </div>
+  <div class="footer-links">
+    <a href="#" data-i18n="privacy">Privacy</a>
+    <a href="#" data-i18n="terms">Terms</a>
+    <a href="#" data-i18n="contact">Contact</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+  </div>
+  <p>© 2025 Rutlu. All rights reserved.</p>
+</footer>
+
+<script>
+const i18n = {
+  en: {
+    nav_features: "Features", nav_cities: "Cities", nav_how: "How it works", nav_download: "Download",
+    badge: "Now available on Google Play",
+    h1: "Discover the world<br>with <em>interactive</em><br>audio guides",
+    hero_sub: "Rutlu turns every street into a story. Explore cities at your own pace with audio guides — no guides, no groups, just you and the world.",
+    btn_get: "Get the App", btn_cities: "Explore cities",
+    badge_audio: "Audio in 6 languages",
+    feat_label: "Why Rutlu", feat_title: "Travel smarter,<br>explore deeper",
+    feat_sub: "Built for curious travellers who want the stories behind the sights — without crowds, schedules, or headphone tour groups.",
+    f1_title: "Professional narration", f1_desc: "Curated scripts, engaging storytelling. Real narratives that bring history to life — not a Wikipedia reading.",
+    f2_title: "Go at your own pace", f2_desc: "Pause, rewind, skip — you control the experience. Stop for a coffee, take photos, explore a side street.",
+    f3_title: "Multiple languages", f3_desc: "Audio guides available in English, Spanish, Catalan and more — every visitor feels at home in any city.",
+    f4_title: "AI Generator", f4_desc: "Use AI to generate a custom audio guide for any place you want to visit — in seconds, in your language.",
+    how_label: "How it works", how_title: "Three steps to explore", how_sub: "From install to first story in under a minute.",
+    s1_title: "Download the app", s1_desc: "Available on Android. iOS coming soon. Free to install with a growing catalogue of audio guides.",
+    s2_title: "Pick a city & guide", s2_desc: "Browse audio guides by city and neighbourhood. Choose your language and press play.",
+    s3_title: "Walk & listen", s3_desc: "Put your phone in your pocket. Discover the stories behind every corner at your own pace.",
+    cities_label: "Available now", cities_title: "Cities to explore", cities_sub: "Starting with two iconic cities and growing fast. More destinations every month.",
+    available: "Available",
+    cta_title: "Start your first guide today", cta_sub: "Free to download. No registration needed to explore.", cta_btn: "Download on Google Play",
+    linkedin: "Follow us on LinkedIn",
+    footer_tag: "Interactive Guides to Discover the World.",
+    privacy: "Privacy", terms: "Terms", contact: "Contact"
+  },
+  ca: {
+    nav_features: "Funcions", nav_cities: "Ciutats", nav_how: "Com funciona", nav_download: "Descarrega",
+    badge: "Ara disponible a Google Play",
+    h1: "Descobreix el món<br>amb <em>audioguies</em><br>interactives",
+    hero_sub: "Rutlu converteix cada carrer en una història. Explora ciutats al teu ritme amb audioguies — sense guies, sense grups, sols tu i el món.",
+    btn_get: "Descarrega l'App", btn_cities: "Explora ciutats",
+    badge_audio: "Àudio en 6 idiomes",
+    feat_label: "Per què Rutlu", feat_title: "Viatja millor,<br>descobreix més",
+    feat_sub: "Creat per viatgers curiosos que volen les històries darrere dels llocs — sense multituds ni horaris fixos.",
+    f1_title: "Narració professional", f1_desc: "Guions curats i relats engrescadors. Narratives reals que donen vida a la història — res de Wikipedia.",
+    f2_title: "Al teu ritme", f2_desc: "Pausa, rebobina, salta — tu controles l'experiència. Para a prendre un cafè, fes fotos, explora un carreró.",
+    f3_title: "Múltiples idiomes", f3_desc: "Audioguies en anglès, castellà, català i més — cada visitant se sent com a casa en qualsevol ciutat.",
+    f4_title: "Generador IA", f4_desc: "Usa la IA per generar una audioguia personalitzada de qualsevol lloc que vulguis visitar — en segons, en el teu idioma.",
+    how_label: "Com funciona", how_title: "Tres passos per explorar", how_sub: "De la instal·lació a la primera història en menys d'un minut.",
+    s1_title: "Descarrega l'app", s1_desc: "Disponible a Android. iOS pròximament. Gratuïta amb un catàleg creixent d'audioguies.",
+    s2_title: "Tria una ciutat i guia", s2_desc: "Navega per les audioguies per ciutat i barri. Tria l'idioma i dona-li al play.",
+    s3_title: "Camina i escolta", s3_desc: "Posa el mòbil a la butxaca. Descobreix les històries darrere de cada racó al teu ritme.",
+    cities_label: "Disponible ara", cities_title: "Ciutats per explorar", cities_sub: "Comencem amb dues ciutats icòniques i creixem ràpid. Més destinacions cada mes.",
+    available: "Disponible",
+    cta_title: "Comença la teva primera guia avui", cta_sub: "Gratuïta. Sense registre per explorar.", cta_btn: "Descarrega a Google Play",
+    linkedin: "Segueix-nos a LinkedIn",
+    footer_tag: "Guies interactives per descobrir el món.",
+    privacy: "Privacitat", terms: "Termes", contact: "Contacte"
+  },
+  es: {
+    nav_features: "Funciones", nav_cities: "Ciudades", nav_how: "Cómo funciona", nav_download: "Descarga",
+    badge: "Ya disponible en Google Play",
+    h1: "Descubre el mundo<br>con <em>audioguías</em><br>interactivas",
+    hero_sub: "Rutlu convierte cada calle en una historia. Explora ciudades a tu ritmo con audioguías — sin guías, sin grupos, solo tú y el mundo.",
+    btn_get: "Descarga la App", btn_cities: "Explorar ciudades",
+    badge_audio: "Audio en 6 idiomas",
+    feat_label: "Por qué Rutlu", feat_title: "Viaja mejor,<br>descubre más",
+    feat_sub: "Creado para viajeros curiosos que quieren las historias detrás de los lugares — sin multitudes ni horarios fijos.",
+    f1_title: "Narración profesional", f1_desc: "Guiones curados y relatos envolventes. Narrativas reales que dan vida a la historia — nada de Wikipedia.",
+    f2_title: "A tu propio ritmo", f2_desc: "Pausa, rebobina, salta — tú controlas la experiencia. Para a tomar un café, saca fotos, explora un callejón.",
+    f3_title: "Múltiples idiomas", f3_desc: "Audioguías en inglés, castellano, catalán y más — cada visitante se siente como en casa en cualquier ciudad.",
+    f4_title: "Generador IA", f4_desc: "Usa la IA para generar una audioguía personalizada de cualquier lugar que quieras visitar — en segundos, en tu idioma.",
+    how_label: "Cómo funciona", how_title: "Tres pasos para explorar", how_sub: "De la instalación a la primera historia en menos de un minuto.",
+    s1_title: "Descarga la app", s1_desc: "Disponible en Android. iOS próximamente. Gratuita con un catálogo creciente de audioguías.",
+    s2_title: "Elige una ciudad y guía", s2_desc: "Navega por las audioguías por ciudad y barrio. Elige el idioma y dale al play.",
+    s3_title: "Camina y escucha", s3_desc: "Mete el móvil en el bolsillo. Descubre las historias detrás de cada rincón a tu ritmo.",
+    cities_label: "Disponible ahora", cities_title: "Ciudades para explorar", cities_sub: "Empezamos con dos ciudades icónicas y crecemos rápido. Más destinos cada mes.",
+    available: "Disponible",
+    cta_title: "Empieza tu primera guía hoy", cta_sub: "Gratuita. Sin registro para explorar.", cta_btn: "Descargar en Google Play",
+    linkedin: "Síguenos en LinkedIn",
+    footer_tag: "Guías interactivas para descubrir el mundo.",
+    privacy: "Privacidad", terms: "Términos", contact: "Contacto"
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key] !== undefined) {
+      el.innerHTML = i18n[lang][key];
+    }
+  });
+  document.documentElement.lang = lang;
+}
+
+// Auto-detect browser language on load
+const browserLang = navigator.language.slice(0,2);
+if (['ca','es'].includes(browserLang)) setLang(browserLang);
+</script>
+</body>
+</html>
