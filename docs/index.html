@@ -42,7 +42,8 @@
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
   .btn-secondary { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid rgba(61,61,245,0.3); color: var(--blue); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
   .btn-secondary:hover { border-color: var(--blue); background: var(--blue-light); transform: translateY(-2px); }
-  .btn-soon { display: inline-flex; align-items: center; gap: 8px; background: rgba(61,61,245,0.08); color: var(--blue); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; cursor: default; opacity: 0.8; }
+  .btn-soon { display: inline-flex; align-items: center; gap: 8px; background: rgba(61,61,245,0.08); color: var(--blue); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-soon:hover { background: rgba(61,61,245,0.15); transform: translateY(-2px); }
 
   .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; animation: fadeUp 0.8s 0.4s ease both; }
   .phone-frame { width: 280px; height: 560px; background: var(--dark); border-radius: 44px; padding: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1); transform: rotate(3deg); transition: transform 0.3s; }
@@ -112,7 +113,8 @@
   .cta-section { background: var(--blue); padding: 6rem 4rem; text-align: center; }
   .cta-section h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.5rem); color: white; letter-spacing: -2px; margin-bottom: 1rem; }
   .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 2.5rem; }
-  .btn-soon-cta { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.15); color: white; padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 1rem; border: 2px solid rgba(255,255,255,0.4); cursor: default; }
+  .btn-soon-cta { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.15); color: white; padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 1rem; border: 2px solid rgba(255,255,255,0.4); text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-soon-cta:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
 
   footer { background: var(--dark); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; }
   .footer-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: white; }
@@ -165,10 +167,10 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
         <span data-i18n="btn_cities">Explore cities</span>
       </a>
-      <div class="btn-soon">
+      <a href="https://play.google.com/store/apps/details?id=com.rutlu.app" target="_blank" rel="noopener" class="btn-soon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
         <span data-i18n="btn_soon">Coming soon on Google Play</span>
-      </div>
+      </a>
     </div>
   </div>
   <div class="hero-visual">
@@ -289,10 +291,10 @@
 <section class="cta-section" id="download">
   <h2 data-i18n="cta_title">Start your first audio guide today</h2>
   <p data-i18n="cta_sub">Free to download. No registration needed to explore.</p>
-  <div class="btn-soon-cta">
+  <a href="https://play.google.com/store/apps/details?id=com.rutlu.app" target="_blank" rel="noopener" class="btn-soon-cta">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
     <span data-i18n="cta_btn">Coming soon on Google Play</span>
-  </div>
+  </a>
 </section>
 
 <!-- FOOTER -->
@@ -315,7 +317,7 @@ const i18n = {
     nav_features:"Features", nav_cities:"Cities", nav_how:"How it works", nav_download:"Download",
     h1:"Discover the world<br>with <em>interactive</em><br>audio guides",
     hero_sub:"Rutlu turns every street into a story. Explore cities at your own pace with audio guides — just you and the world around you.",
-    btn_cities:"Explore cities", btn_soon:"Coming soon on Google Play",
+    btn_cities:"Explore cities", btn_soon:"Download on Google Play",
     badge_audio:"Audio in 6 languages",
     feat_label:"Why Rutlu", feat_title:"Travel smarter,<br>explore deeper",
     feat_sub:"Built for curious travellers who want the stories behind the sights — without crowds or fixed schedules.",
@@ -333,7 +335,7 @@ const i18n = {
     s3_title:"Walk & listen", s3_desc:"Put your phone in your pocket. Discover the stories behind every corner at your own pace.",
     cities_label:"Available now", cities_title:"Cities to explore", cities_sub:"Starting with two iconic cities and growing fast. More destinations every month.",
     available:"Available",
-    cta_title:"Start your first audio guide today", cta_sub:"Free to download. No registration needed to explore.", cta_btn:"Coming soon on Google Play",
+    cta_title:"Start your first audio guide today", cta_sub:"Free to download. No registration needed to explore.", cta_btn:"Download on Google Play",
     footer_tag:"Interactive Guides to Discover the World.",
     privacy:"Privacy", terms:"Terms", contact:"Contact"
   },
@@ -341,7 +343,7 @@ const i18n = {
     nav_features:"Funcions", nav_cities:"Ciutats", nav_how:"Com funciona", nav_download:"Descarrega",
     h1:"Descobreix el món<br>amb <em>audioguies</em><br>interactives",
     hero_sub:"Rutlu converteix cada carrer en una història. Explora ciutats al teu ritme amb audioguies — sols tu i el món que t'envolta.",
-    btn_cities:"Explora ciutats", btn_soon:"Pròximament a Google Play",
+    btn_cities:"Explora ciutats", btn_soon:"Descarrega-la a Google Play",
     badge_audio:"Àudio en 6 idiomes",
     feat_label:"Per què Rutlu", feat_title:"Viatja millor,<br>descobreix més",
     feat_sub:"Creat per viatgers curiosos que volen les històries darrere dels llocs — sense multituds ni horaris fixos.",
@@ -359,7 +361,7 @@ const i18n = {
     s3_title:"Camina i escolta", s3_desc:"Posa el mòbil a la butxaca. Descobreix les històries darrere de cada racó al teu ritme.",
     cities_label:"Disponible ara", cities_title:"Ciutats per explorar", cities_sub:"Comencem amb dues ciutats icòniques i creixem ràpid. Més destinacions cada mes.",
     available:"Disponible",
-    cta_title:"Comença la teva primera audioguia avui", cta_sub:"Gratuïta. Sense registre per explorar.", cta_btn:"Pròximament a Google Play",
+    cta_title:"Comença la teva primera audioguia avui", cta_sub:"Gratuïta. Sense registre per explorar.", cta_btn:"Descarrega-la a Google Play",
     footer_tag:"Guies interactives per descobrir el món.",
     privacy:"Privacitat", terms:"Termes", contact:"Contacte"
   },
@@ -367,7 +369,7 @@ const i18n = {
     nav_features:"Funciones", nav_cities:"Ciudades", nav_how:"Cómo funciona", nav_download:"Descarga",
     h1:"Descubre el mundo<br>con <em>audioguías</em><br>interactivas",
     hero_sub:"Rutlu convierte cada calle en una historia. Explora ciudades a tu ritmo con audioguías — solo tú y el mundo que te rodea.",
-    btn_cities:"Explorar ciudades", btn_soon:"Próximamente en Google Play",
+    btn_cities:"Explorar ciudades", btn_soon:"Descárgala en Google Play",
     badge_audio:"Audio en 6 idiomas",
     feat_label:"Por qué Rutlu", feat_title:"Viaja mejor,<br>descubre más",
     feat_sub:"Creado para viajeros curiosos que quieren las historias detrás de los lugares — sin multitudes ni horarios fijos.",
@@ -385,7 +387,7 @@ const i18n = {
     s3_title:"Camina y escucha", s3_desc:"Mete el móvil en el bolsillo. Descubre las historias detrás de cada rincón a tu ritmo.",
     cities_label:"Disponible ahora", cities_title:"Ciudades para explorar", cities_sub:"Empezamos con dos ciudades icónicas y crecemos rápido. Más destinos cada mes.",
     available:"Disponible",
-    cta_title:"Empieza tu primera audioguía hoy", cta_sub:"Gratuita. Sin registro para explorar.", cta_btn:"Próximamente en Google Play",
+    cta_title:"Empieza tu primera audioguía hoy", cta_sub:"Gratuita. Sin registro para explorar.", cta_btn:"Descárgala en Google Play",
     footer_tag:"Guías interactivas para descubrir el mundo.",
     privacy:"Privacidad", terms:"Términos", contact:"Contacto"
   }
