@@ -4,16 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rutlu — Interactive Guides to Discover the World</title>
+<meta name="description" content="Rutlu turns every street into a story. Explore cities at your own pace with audio guides — just you and the world around you.">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rutlu.com/">
+<meta property="og:title" content="Rutlu — Interactive Guides to Discover the World">
+<meta property="og:description" content="Rutlu turns every street into a story. Explore cities at your own pace with audio guides — just you and the world around you.">
+<meta property="og:image" content="https://rutlu.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rutlu — Interactive Guides to Discover the World">
+<meta name="twitter:description" content="Rutlu turns every street into a story. Explore cities at your own pace with audio guides.">
+<meta name="twitter:image" content="https://rutlu.com/assets/og-image.jpg">
+
+<!-- Structured data for rich results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Rutlu",
+  "description": "Rutlu turns every street into a story. Explore cities at your own pace with interactive audio guides.",
+  "operatingSystem": "ANDROID",
+  "applicationCategory": "TravelApplication",
+  "url": "https://rutlu.com/",
+  "installUrl": "https://play.google.com/store/apps/details?id=com.rutlu.app",
+  "image": "https://rutlu.com/assets/og-image.jpg",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --blue: #3D3DF5; --blue-dark: #2828CC; --blue-light: #E8E8FF;
     --white: #FFFFFF; --off: #F5F5FF; --gray: #6B6B80; --dark: #0D0D1A; --text: #1A1A2E;
+    --accent: #E8613D;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+  body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
 
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -22,7 +58,7 @@
     background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(61,61,245,0.08);
   }
-  .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--blue); letter-spacing: -0.5px; text-decoration: none; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.4rem; color: var(--blue); letter-spacing: -0.5px; text-decoration: none; }
   .nav-logo img { width: 38px; height: 38px; border-radius: 9px; }
   .nav-right { display: flex; gap: 2rem; align-items: center; }
   nav a { font-size: 0.9rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
@@ -30,37 +66,29 @@
   .nav-cta { background: var(--blue); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 100px; font-weight: 500; transition: background 0.2s, transform 0.15s !important; }
   .nav-cta:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
   .lang-switcher { display: flex; gap: 4px; background: var(--off); border-radius: 100px; padding: 3px; }
-  .lang-btn { border: none; background: transparent; cursor: pointer; font-size: 0.78rem; font-weight: 600; color: var(--gray); padding: 0.25rem 0.6rem; border-radius: 100px; transition: background 0.15s, color 0.15s; font-family: 'DM Sans', sans-serif; }
+  .lang-btn { border: none; background: transparent; cursor: pointer; font-size: 0.78rem; font-weight: 600; color: var(--gray); padding: 0.25rem 0.6rem; border-radius: 100px; transition: background 0.15s, color 0.15s; font-family: 'Inter', sans-serif; }
   .lang-btn.active { background: var(--blue); color: white; }
   .lang-btn:hover:not(.active) { color: var(--blue); }
 
   .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 4rem 4rem; gap: 3rem; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60%; height: 100%; background: radial-gradient(ellipse at center, #E8E8FF 0%, transparent 70%); pointer-events: none; }
-  h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -2px; color: var(--dark); margin-bottom: 1.25rem; animation: fadeUp 0.6s 0.1s ease both; }
-  h1 em { color: var(--blue); font-style: normal; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.08; letter-spacing: -1px; color: var(--dark); margin-bottom: 1.25rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 em { color: var(--blue); font-style: italic; }
   .hero-sub { font-size: 1.1rem; color: var(--gray); line-height: 1.7; max-width: 480px; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.2s ease both; }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-btns { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; animation: fadeUp 0.6s 0.3s ease both; }
   .btn-secondary { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid rgba(61,61,245,0.3); color: var(--blue); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
   .btn-secondary:hover { border-color: var(--blue); background: var(--blue-light); transform: translateY(-2px); }
-  .btn-soon { display: inline-flex; align-items: center; gap: 8px; background: rgba(61,61,245,0.08); color: var(--blue); padding: 0.9rem 2rem; border-radius: 100px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: background 0.2s, transform 0.15s; }
-  .btn-soon:hover { background: rgba(61,61,245,0.15); transform: translateY(-2px); }
+  .btn-soon { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: white; padding: 1rem 2.25rem; border-radius: 100px; font-weight: 600; font-size: 1.05rem; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 12px 30px rgba(61,61,245,0.25); }
+  .btn-soon:hover { background: var(--blue-dark); transform: translateY(-2px); }
+  .qr-block { display: flex; align-items: center; gap: 10px; }
+  .qr-block img { width: 64px; height: 64px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); }
+  .qr-caption { font-size: 0.78rem; color: var(--gray); max-width: 90px; line-height: 1.3; }
 
   .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; animation: fadeUp 0.8s 0.4s ease both; }
   .phone-frame { width: 280px; height: 560px; background: var(--dark); border-radius: 44px; padding: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1); transform: rotate(3deg); transition: transform 0.3s; }
   .phone-frame:hover { transform: rotate(0deg); }
   .phone-screen { width: 100%; height: 100%; background: var(--off); border-radius: 34px; overflow: hidden; }
-  .phone-header { background: var(--blue); color: white; padding: 1.2rem 1rem 0.8rem; display: flex; align-items: center; justify-content: space-between; }
-  .phone-header-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
-  .phone-map { height: 180px; background: #e8e8f0; overflow: hidden; }
-  .phone-map svg { width: 100%; height: 100%; }
-  .phone-stops { padding: 0.75rem; display: flex; flex-direction: column; }
-  .stop-item { display: flex; align-items: center; padding: 0.7rem 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.07); }
-  .stop-item:last-child { border-bottom: none; }
-  .stop-num { width: 22px; height: 22px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; margin-right: 8px; }
-  .stop-name { flex: 1; font-weight: 500; color: var(--text); font-size: 0.78rem; }
-  .stop-time { color: var(--gray); font-size: 0.7rem; margin-right: 6px; }
-  .play-btn { width: 26px; height: 26px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .play-btn::after { content: ''; border-left: 7px solid white; border-top: 4px solid transparent; border-bottom: 4px solid transparent; margin-left: 2px; }
+  .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
   .float-badge { position: absolute; background: white; border-radius: 16px; padding: 0.5rem 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.12); font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
   .badge-left { left: -60px; top: 30%; animation: float 4s ease-in-out infinite; }
   .badge-right { right: -50px; bottom: 30%; animation: float 4s ease-in-out infinite reverse; animation-delay: 2s; }
@@ -70,7 +98,7 @@
 
   .section { padding: 6rem 4rem; }
   .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 0.75rem; }
-  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--dark); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1rem; }
+  .section-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--dark); letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 1rem; }
   .section-sub { color: var(--gray); font-size: 1.05rem; line-height: 1.7; max-width: 540px; margin-bottom: 3rem; }
 
   .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
@@ -79,14 +107,22 @@
   .feature-card.wide { grid-column: span 2; }
   .feature-icon { width: 48px; height: 48px; background: var(--blue); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
   .feature-icon svg { width: 24px; height: 24px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .feature-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--dark); margin-bottom: 0.5rem; }
+  .feature-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
   .feature-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.65; }
+
+  /* Screenshot carousel */
+  .carousel { display: flex; gap: 1.25rem; overflow-x: auto; padding: 0.5rem 0 1.5rem; scroll-snap-type: x mandatory; margin-top: 3rem; }
+  .carousel::-webkit-scrollbar { height: 6px; }
+  .carousel::-webkit-scrollbar-thumb { background: rgba(61,61,245,0.2); border-radius: 10px; }
+  .carousel-item { flex: 0 0 auto; width: 220px; scroll-snap-align: start; }
+  .carousel-item img { width: 100%; border-radius: 20px; box-shadow: 0 16px 40px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.06); display: block; }
+  .carousel-item p { margin-top: 0.75rem; font-size: 0.85rem; color: var(--gray); text-align: center; }
 
   /* Values strip */
   .values-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
   .value-card { background: var(--dark); border-radius: 20px; padding: 2rem; }
   .value-icon { font-size: 1.8rem; margin-bottom: 1rem; }
-  .value-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: white; margin-bottom: 0.5rem; }
+  .value-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1rem; color: white; margin-bottom: 0.5rem; }
   .value-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
 
   .how-bg { background: #F8F8FF; }
@@ -94,8 +130,8 @@
   .how-bg .section-title { color: var(--dark); }
   .how-bg .section-sub { color: var(--gray); }
   .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-  .step-num { font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800; color: rgba(61,61,245,0.08); line-height: 1; margin-bottom: 0.5rem; }
-  .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem; }
+  .step-num { font-family: 'Fraunces', serif; font-size: 4rem; font-weight: 700; color: rgba(61,61,245,0.08); line-height: 1; margin-bottom: 0.5rem; }
+  .step-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.05rem; color: var(--dark); margin-bottom: 0.5rem; }
   .step-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
 
   .cities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
@@ -104,20 +140,33 @@
   .city-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
   .city-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,26,0.8) 0%, transparent 60%); }
   .city-info { position: absolute; bottom: 1.25rem; left: 1.25rem; right: 1.25rem; display: flex; align-items: flex-end; justify-content: space-between; }
-  .city-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: white; }
+  .city-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.4rem; color: white; }
   .city-routes { color: rgba(255,255,255,0.6); font-size: 0.78rem; }
   .city-tag { background: var(--blue); color: white; font-size: 0.72rem; font-weight: 500; padding: 0.25rem 0.75rem; border-radius: 100px; }
+  .city-tag-new { background: var(--accent); color: white; font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 100px; }
   .city-card-barna { background: linear-gradient(135deg, #1a1a3e 0%, #3D3DF5 100%); }
   .city-card-beijing { background: linear-gradient(135deg, #2a1a1a 0%, #c0392b 100%); }
+  .city-card-ancona { background: linear-gradient(135deg, #1a2a2e 0%, #1c7c8c 100%); }
+  .city-card-shanghai { background: linear-gradient(135deg, #2a1a2e 0%, #8c3fa0 100%); }
+
+  .ai-cities-banner { margin-top: 2rem; display: flex; align-items: center; gap: 1rem; background: var(--blue-light); border: 1.5px solid rgba(61,61,245,0.25); border-radius: 20px; padding: 1.5rem 2rem; }
+  .ai-cities-banner .ai-icon { width: 44px; height: 44px; flex-shrink: 0; background: var(--blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .ai-cities-banner .ai-icon svg { width: 22px; height: 22px; fill: white; }
+  .ai-banner-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.1rem; color: var(--dark); }
+  .ai-banner-desc { font-size: 0.9rem; color: var(--gray); margin-top: 0.15rem; }
 
   .cta-section { background: var(--blue); padding: 6rem 4rem; text-align: center; }
-  .cta-section h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.5rem); color: white; letter-spacing: -2px; margin-bottom: 1rem; }
+  .cta-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(2rem, 4vw, 3.5rem); color: white; letter-spacing: -1px; margin-bottom: 1rem; }
   .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 2.5rem; }
-  .btn-soon-cta { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.15); color: white; padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 1rem; border: 2px solid rgba(255,255,255,0.4); text-decoration: none; transition: background 0.2s, transform 0.15s; }
-  .btn-soon-cta:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+  .btn-soon-cta { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--blue); padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: transform 0.15s, box-shadow 0.2s; }
+  .btn-soon-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+  .cta-qr { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+  .cta-qr-block { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 0.75rem 1.25rem; }
+  .cta-qr-block img { width: 56px; height: 56px; border-radius: 6px; background: white; padding: 3px; }
+  .cta-qr-block span { color: rgba(255,255,255,0.75); font-size: 0.8rem; max-width: 100px; text-align: left; line-height: 1.3; }
 
   footer { background: var(--dark); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; }
-  .footer-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: white; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.2rem; color: white; }
   .footer-logo img { width: 32px; height: 32px; border-radius: 7px; }
   footer p { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
   .footer-links { display: flex; gap: 1.5rem; }
@@ -138,6 +187,7 @@
     footer { flex-direction: column; gap: 1.5rem; text-align: center; }
     .nav-right a:not(.nav-cta) { display: none; }
     .values-strip { grid-template-columns: 1fr; }
+    .ai-cities-banner { flex-direction: column; text-align: center; }
   }
 </style>
 </head>
@@ -154,7 +204,7 @@
       <button class="lang-btn" onclick="setLang('ca')">CA</button>
       <button class="lang-btn" onclick="setLang('es')">ES</button>
     </div>
-    <a href="#download" class="nav-cta" data-i18n="nav_download">Download</a>
+    <a href="https://play.google.com/store/apps/details?id=com.rutlu.app&utm_source=web&utm_medium=cta&utm_campaign=nav" class="nav-cta" target="_blank" rel="noopener" data-i18n="nav_download">Download</a>
   </div>
 </nav>
 
@@ -163,50 +213,25 @@
     <h1 data-i18n="h1">Discover the world<br>with <em>interactive</em><br>audio guides</h1>
     <p class="hero-sub" data-i18n="hero_sub">Rutlu turns every street into a story. Explore cities at your own pace with audio guides — just you and the world around you.</p>
     <div class="hero-btns">
-      <a href="#cities" class="btn-secondary">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        <span data-i18n="btn_cities">Explore cities</span>
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=com.rutlu.app" target="_blank" rel="noopener" class="btn-soon">
+      <a href="https://play.google.com/store/apps/details?id=com.rutlu.app&utm_source=web&utm_medium=cta&utm_campaign=hero" target="_blank" rel="noopener" class="btn-soon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
-        <span data-i18n="btn_soon">Coming soon on Google Play</span>
+        <span data-i18n="btn_soon">Download on Google Play</span>
       </a>
+      <div class="qr-block">
+        <img src="data:image/png;base64,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" alt="QR download">
+        <span class="qr-caption" data-i18n="qr_caption">Scan to download</span>
+      </div>
     </div>
   </div>
   <div class="hero-visual">
     <div style="position:relative;">
       <div class="phone-frame">
         <div class="phone-screen">
-          <div class="phone-header">
-            <div class="phone-header-title">La Rambla</div>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          </div>
-          <div class="phone-map">
-            <svg viewBox="0 0 256 180" xmlns="http://www.w3.org/2000/svg">
-              <rect width="256" height="180" fill="#e8eaf0"/>
-              <line x1="0" y1="90" x2="256" y2="90" stroke="#c8cad8" stroke-width="12"/>
-              <line x1="60" y1="0" x2="60" y2="180" stroke="#d0d2e0" stroke-width="6"/>
-              <line x1="120" y1="0" x2="120" y2="180" stroke="#d0d2e0" stroke-width="6"/>
-              <line x1="180" y1="0" x2="180" y2="180" stroke="#d0d2e0" stroke-width="6"/>
-              <line x1="0" y1="45" x2="256" y2="45" stroke="#d8dae8" stroke-width="4"/>
-              <line x1="0" y1="135" x2="256" y2="135" stroke="#d8dae8" stroke-width="4"/>
-              <polyline points="30,30 80,60 100,90 130,100 160,80 200,140" stroke="#3D3DF5" stroke-width="3" stroke-dasharray="6,3" fill="none"/>
-              <circle cx="30" cy="30" r="8" fill="#3D3DF5"/><text x="30" y="34" text-anchor="middle" font-size="9" fill="white" font-weight="bold">1</text>
-              <circle cx="80" cy="60" r="8" fill="#3D3DF5"/><text x="80" y="64" text-anchor="middle" font-size="9" fill="white" font-weight="bold">2</text>
-              <circle cx="130" cy="100" r="8" fill="#3D3DF5"/><text x="130" y="104" text-anchor="middle" font-size="9" fill="white" font-weight="bold">3</text>
-              <circle cx="200" cy="140" r="8" fill="#3D3DF5"/><text x="200" y="144" text-anchor="middle" font-size="9" fill="white" font-weight="bold">4</text>
-            </svg>
-          </div>
-          <div class="phone-stops">
-            <div class="stop-item"><div class="stop-num">0</div><div><div class="stop-name">Introduction – La Rambla</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
-            <div class="stop-item"><div class="stop-num">1</div><div><div class="stop-name">Plaça de Catalunya</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
-            <div class="stop-item"><div class="stop-num">2</div><div><div class="stop-name">Canaletes Fountain</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
-            <div class="stop-item"><div class="stop-num">3</div><div><div class="stop-name">La Boqueria Market</div><div class="stop-time">00:00 / 00:00</div></div><div class="play-btn"></div></div>
-          </div>
+          <img src="assets/screenshot-hero.jpg" alt="Rutlu app screenshot — La Rambla audio guide">
         </div>
       </div>
       <div class="float-badge badge-left"><div class="badge-dot" style="background:#3D3DF5;"></div>7 stops · 2.3 km</div>
-      <div class="float-badge badge-right"><div class="badge-dot" style="background:#22c55e;"></div><span data-i18n="badge_audio">Audio in 6 languages</span></div>
+      <div class="float-badge badge-right"><div class="badge-dot" style="background:#22c55e;"></div><span data-i18n="badge_audio">Audio in 3 languages</span></div>
     </div>
   </div>
 </section>
@@ -217,6 +242,11 @@
   <h2 class="section-title" data-i18n="feat_title">Travel smarter,<br>explore deeper</h2>
   <p class="section-sub" data-i18n="feat_sub">Built for curious travellers who want the stories behind the sights — without crowds or fixed schedules.</p>
   <div class="features-grid">
+    <div class="feature-card wide" style="background:var(--blue);">
+      <div class="feature-icon" style="background:rgba(255,255,255,0.15);"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="feature-title" style="color:white;" data-i18n="f4_title">AI Generator</div>
+      <p class="feature-desc" style="color:rgba(255,255,255,0.7);" data-i18n="f4_desc">Use AI to generate a custom audio guide for any place you want to visit — in seconds, in your language.</p>
+    </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
       <div class="feature-title" data-i18n="f1_title">Professional narration</div>
@@ -232,10 +262,21 @@
       <div class="feature-title" data-i18n="f3_title">Multiple languages</div>
       <p class="feature-desc" data-i18n="f3_desc">Audio guides available in English, Spanish and Catalan — every visitor feels at home in any city.</p>
     </div>
-    <div class="feature-card" style="background:var(--blue);">
-      <div class="feature-icon" style="background:rgba(255,255,255,0.15);"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-      <div class="feature-title" style="color:white;" data-i18n="f4_title">AI Generator</div>
-      <p class="feature-desc" style="color:rgba(255,255,255,0.7);" data-i18n="f4_desc">Use AI to generate a custom audio guide for any place you want to visit — in seconds, in your language.</p>
+  </div>
+
+  <!-- SCREENSHOT CAROUSEL -->
+  <div class="carousel">
+    <div class="carousel-item">
+      <img src="assets/screenshot-cities.jpg" alt="Select a city in the Rutlu app">
+      <p data-i18n="shot1_caption">Pick your city</p>
+    </div>
+    <div class="carousel-item">
+      <img src="assets/screenshot-sagrada.jpg" alt="Sagrada Família audio guide stops">
+      <p data-i18n="shot2_caption">Follow the route stop by stop</p>
+    </div>
+    <div class="carousel-item">
+      <img src="assets/screenshot-forbidden.jpg" alt="Forbidden City audio guide stops">
+      <p data-i18n="shot3_caption">Listen and discover the story</p>
     </div>
   </div>
 
@@ -284,6 +325,16 @@
   <div class="cities-grid">
     <div class="city-card city-card-barna"><div class="city-bg">🏛️</div><div class="city-overlay"></div><div class="city-info"><div><div class="city-name">Barcelona</div><div class="city-routes">La Rambla · Sagrada Família</div></div><div class="city-tag" data-i18n="available">Available</div></div></div>
     <div class="city-card city-card-beijing"><div class="city-bg">🏮</div><div class="city-overlay"></div><div class="city-info"><div><div class="city-name">Beijing</div><div class="city-routes">Forbidden City · Tiananmen</div></div><div class="city-tag" data-i18n="available">Available</div></div></div>
+    <div class="city-card city-card-ancona"><div class="city-bg">⚓</div><div class="city-overlay"></div><div class="city-info"><div><div class="city-name">Ancona</div><div class="city-routes">Duomo di San Ciriaco · Porto</div></div><div class="city-tag" data-i18n="available">Available</div></div></div>
+    <div class="city-card city-card-shanghai"><div class="city-bg">🏙️</div><div class="city-overlay"></div><div class="city-info"><div><div class="city-name">Shanghai</div><div class="city-routes">The Bund · Yu Garden</div></div><div class="city-tag-new" data-i18n="new_tag">New</div></div></div>
+  </div>
+
+  <div class="ai-cities-banner">
+    <div class="ai-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+    <div>
+      <div class="ai-banner-title" data-i18n="ai_banner_title">+ Cities with AI</div>
+      <div class="ai-banner-desc" data-i18n="ai_banner_desc">Don't see your destination? Generate an audio guide for any place in the app, instantly.</div>
+    </div>
   </div>
 </section>
 
@@ -291,10 +342,16 @@
 <section class="cta-section" id="download">
   <h2 data-i18n="cta_title">Start your first audio guide today</h2>
   <p data-i18n="cta_sub">Free to download. No registration needed to explore.</p>
-  <a href="https://play.google.com/store/apps/details?id=com.rutlu.app" target="_blank" rel="noopener" class="btn-soon-cta">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
-    <span data-i18n="cta_btn">Coming soon on Google Play</span>
-  </a>
+  <div class="cta-qr">
+    <a href="https://play.google.com/store/apps/details?id=com.rutlu.app&utm_source=web&utm_medium=cta&utm_campaign=footer" target="_blank" rel="noopener" class="btn-soon-cta">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+      <span data-i18n="cta_btn">Download on Google Play</span>
+    </a>
+    <div class="cta-qr-block">
+      <img src="data:image/png;base64,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" alt="QR download">
+      <span data-i18n="qr_caption">Scan to download</span>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -318,13 +375,15 @@ const i18n = {
     h1:"Discover the world<br>with <em>interactive</em><br>audio guides",
     hero_sub:"Rutlu turns every street into a story. Explore cities at your own pace with audio guides — just you and the world around you.",
     btn_cities:"Explore cities", btn_soon:"Download on Google Play",
-    badge_audio:"Audio in 6 languages",
+    qr_caption:"Scan to download",
+    badge_audio:"Audio in 3 languages",
     feat_label:"Why Rutlu", feat_title:"Travel smarter,<br>explore deeper",
     feat_sub:"Built for curious travellers who want the stories behind the sights — without crowds or fixed schedules.",
     f1_title:"Professional narration", f1_desc:"Curated scripts and engaging storytelling. Real narratives that bring history and culture to life.",
     f2_title:"Go at your own pace", f2_desc:"Pause, rewind, skip — you control the experience. Stop for a coffee, take photos, explore a side street.",
     f3_title:"Multiple languages", f3_desc:"Audio guides available in English, Spanish and Catalan — every visitor feels at home in any city.",
     f4_title:"AI Generator", f4_desc:"Use AI to generate a custom audio guide for any place you want to visit — in seconds, in your language.",
+    shot1_caption:"Pick your city", shot2_caption:"Follow the route stop by stop", shot3_caption:"Listen and discover the story",
     v1_title:"Heritage Values", v1_desc:"Shifting traveler motivation from party-based trips to quiet, respectful cultural immersion — discovering the soul of each place.",
     v2_title:"Smart Decentralization", v2_desc:"Guiding curious walkers off the beaten path to discover hidden local architecture, history and neighbourhoods rarely seen by tourists.",
     v3_title:"Empowering Communities", v3_desc:"Fostering respectful dialogue between travellers and local neighbourhoods, while boosting foot traffic to authentic local shops and culture.",
@@ -334,7 +393,8 @@ const i18n = {
     s2_title:"Pick a city & guide", s2_desc:"Browse audio guides by city and neighbourhood. Choose your language and press play.",
     s3_title:"Walk & listen", s3_desc:"Put your phone in your pocket. Discover the stories behind every corner at your own pace.",
     cities_label:"Available now", cities_title:"Cities to explore", cities_sub:"Starting with two iconic cities and growing fast. More destinations every month.",
-    available:"Available",
+    available:"Available", new_tag:"New",
+    ai_banner_title:"+ Cities with AI", ai_banner_desc:"Don't see your destination? Generate an audio guide for any place in the app, instantly.",
     cta_title:"Start your first audio guide today", cta_sub:"Free to download. No registration needed to explore.", cta_btn:"Download on Google Play",
     footer_tag:"Interactive Guides to Discover the World.",
     privacy:"Privacy", terms:"Terms", contact:"Contact"
@@ -344,13 +404,15 @@ const i18n = {
     h1:"Descobreix el món<br>amb <em>audioguies</em><br>interactives",
     hero_sub:"Rutlu converteix cada carrer en una història. Explora ciutats al teu ritme amb audioguies — sols tu i el món que t'envolta.",
     btn_cities:"Explora ciutats", btn_soon:"Descarrega-la a Google Play",
-    badge_audio:"Àudio en 6 idiomes",
+    qr_caption:"Escaneja per descarregar",
+    badge_audio:"Àudio en 3 idiomes",
     feat_label:"Per què Rutlu", feat_title:"Viatja millor,<br>descobreix més",
     feat_sub:"Creat per viatgers curiosos que volen les històries darrere dels llocs — sense multituds ni horaris fixos.",
     f1_title:"Narració professional", f1_desc:"Guions curats i relats engrescadors. Narratives reals que donen vida a la història i la cultura.",
     f2_title:"Al teu ritme", f2_desc:"Pausa, rebobina, salta — tu controles l'experiència. Para a prendre un cafè, fes fotos, explora un carreró.",
     f3_title:"Múltiples idiomes", f3_desc:"Audioguies en anglès, castellà i català — cada visitant se sent com a casa en qualsevol ciutat.",
     f4_title:"Generador IA", f4_desc:"Usa la IA per generar una audioguia personalitzada de qualsevol lloc que vulguis visitar — en segons, en el teu idioma.",
+    shot1_caption:"Tria la teva ciutat", shot2_caption:"Segueix la ruta pas a pas", shot3_caption:"Escolta i descobreix la història",
     v1_title:"Valors patrimonials", v1_desc:"Del turisme de masses al de la imersió cultural respectuosa — descobrint l'ànima de cada lloc amb consciència i calma.",
     v2_title:"Descentralització intel·ligent", v2_desc:"Guiant caminants curiosos fora dels circuits habituals per descobrir arquitectura, història i barris autèntics poc coneguts.",
     v3_title:"Comunitats enfortides", v3_desc:"Fomentant un diàleg respectuós entre viatgers i barris locals, impulsant el comerç de proximitat i la cultura autèntica.",
@@ -360,7 +422,8 @@ const i18n = {
     s2_title:"Tria una ciutat i guia", s2_desc:"Navega per les audioguies per ciutat i barri. Tria l'idioma i dona-li al play.",
     s3_title:"Camina i escolta", s3_desc:"Posa el mòbil a la butxaca. Descobreix les històries darrere de cada racó al teu ritme.",
     cities_label:"Disponible ara", cities_title:"Ciutats per explorar", cities_sub:"Comencem amb dues ciutats icòniques i creixem ràpid. Més destinacions cada mes.",
-    available:"Disponible",
+    available:"Disponible", new_tag:"Nou",
+    ai_banner_title:"+ Ciutats amb IA", ai_banner_desc:"No hi és la teva destinació? Genera una audioguia de qualsevol lloc dins de l'app, a l'instant.",
     cta_title:"Comença la teva primera audioguia avui", cta_sub:"Gratuïta. Sense registre per explorar.", cta_btn:"Descarrega-la a Google Play",
     footer_tag:"Guies interactives per descobrir el món.",
     privacy:"Privacitat", terms:"Termes", contact:"Contacte"
@@ -370,13 +433,15 @@ const i18n = {
     h1:"Descubre el mundo<br>con <em>audioguías</em><br>interactivas",
     hero_sub:"Rutlu convierte cada calle en una historia. Explora ciudades a tu ritmo con audioguías — solo tú y el mundo que te rodea.",
     btn_cities:"Explorar ciudades", btn_soon:"Descárgala en Google Play",
-    badge_audio:"Audio en 6 idiomas",
+    qr_caption:"Escanea para descargar",
+    badge_audio:"Audio en 3 idiomas",
     feat_label:"Por qué Rutlu", feat_title:"Viaja mejor,<br>descubre más",
     feat_sub:"Creado para viajeros curiosos que quieren las historias detrás de los lugares — sin multitudes ni horarios fijos.",
     f1_title:"Narración profesional", f1_desc:"Guiones curados y relatos envolventes. Narrativas reales que dan vida a la historia y la cultura.",
     f2_title:"A tu propio ritmo", f2_desc:"Pausa, rebobina, salta — tú controlas la experiencia. Para a tomar un café, saca fotos, explora un callejón.",
     f3_title:"Múltiples idiomas", f3_desc:"Audioguías en inglés, castellano y catalán — cada visitante se siente como en casa en cualquier ciudad.",
     f4_title:"Generador IA", f4_desc:"Usa la IA para generar una audioguía personalizada de cualquier lugar que quieras visitar — en segundos, en tu idioma.",
+    shot1_caption:"Elige tu ciudad", shot2_caption:"Sigue la ruta parada a parada", shot3_caption:"Escucha y descubre la historia",
     v1_title:"Valores patrimoniales", v1_desc:"Del turismo de masas a la inmersión cultural respetuosa — descubriendo el alma de cada lugar con conciencia y calma.",
     v2_title:"Descentralización inteligente", v2_desc:"Llevando a caminantes curiosos fuera de los circuitos habituales para descubrir arquitectura, historia y barrios auténticos poco conocidos.",
     v3_title:"Comunidades fortalecidas", v3_desc:"Fomentando un diálogo respetuoso entre viajeros y barrios locales, impulsando el comercio de proximidad y la cultura auténtica.",
@@ -386,9 +451,10 @@ const i18n = {
     s2_title:"Elige una ciudad y guía", s2_desc:"Navega por las audioguías por ciudad y barrio. Elige el idioma y dale al play.",
     s3_title:"Camina y escucha", s3_desc:"Mete el móvil en el bolsillo. Descubre las historias detrás de cada rincón a tu ritmo.",
     cities_label:"Disponible ahora", cities_title:"Ciudades para explorar", cities_sub:"Empezamos con dos ciudades icónicas y crecemos rápido. Más destinos cada mes.",
-    available:"Disponible",
+    available:"Disponible", new_tag:"Nuevo",
+    ai_banner_title:"+ Ciudades con IA", ai_banner_desc:"¿No está tu destino? Genera una audioguía de cualquier lugar dentro de la app, al instante.",
     cta_title:"Empieza tu primera audioguía hoy", cta_sub:"Gratuita. Sin registro para explorar.", cta_btn:"Descárgala en Google Play",
-    footer_tag:"Guías interactivas para descubrir el mundo.",
+    footer_tag:"Guías para descubrir el mundo.",
     privacy:"Privacidad", terms:"Términos", contact:"Contacto"
   }
 };
@@ -410,3 +476,4 @@ if (['ca','es'].includes(browserLang)) setLang(browserLang);
 </script>
 </body>
 </html>
+
