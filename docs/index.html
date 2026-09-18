@@ -81,7 +81,7 @@
   .btn-soon { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: white; padding: 1rem 2.25rem; border-radius: 100px; font-weight: 600; font-size: 1.05rem; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 12px 30px rgba(61,61,245,0.25); }
   .btn-soon:hover { background: var(--blue-dark); transform: translateY(-2px); }
   .qr-block { display: flex; align-items: center; gap: 10px; }
-  .qr-block img { width: 64px; height: 64px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); }
+  .qr-block img { width: 128px; height: 128px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.08); }
   .qr-caption { font-size: 0.78rem; color: var(--gray); max-width: 90px; line-height: 1.3; }
 
   .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; animation: fadeUp 0.8s 0.4s ease both; }
@@ -110,14 +110,6 @@
   .feature-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
   .feature-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.65; }
 
-  /* Screenshot carousel */
-  .carousel { display: flex; gap: 1.25rem; overflow-x: auto; padding: 0.5rem 0 1.5rem; scroll-snap-type: x mandatory; margin-top: 3rem; }
-  .carousel::-webkit-scrollbar { height: 6px; }
-  .carousel::-webkit-scrollbar-thumb { background: rgba(61,61,245,0.2); border-radius: 10px; }
-  .carousel-item { flex: 0 0 auto; width: 200px; scroll-snap-align: start; }
-  .carousel-item .shot-frame { width: 100%; aspect-ratio: 9 / 17.5; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.06); background: var(--dark); }
-  .carousel-item .shot-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 8%; display: block; }
-  .carousel-item p { margin-top: 0.75rem; font-size: 0.85rem; color: var(--gray); text-align: center; }
 
   /* Values strip */
   .values-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
@@ -162,7 +154,7 @@
   .btn-soon-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
   .cta-qr { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
   .cta-qr-block { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 0.75rem 1.25rem; }
-  .cta-qr-block img { width: 56px; height: 56px; border-radius: 6px; background: white; padding: 3px; }
+  .cta-qr-block img { width: 110px; height: 110px; border-radius: 10px; background: white; padding: 4px; }
   .cta-qr-block span { color: rgba(255,255,255,0.75); font-size: 0.8rem; max-width: 100px; text-align: left; line-height: 1.3; }
 
   footer { background: var(--dark); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; }
@@ -242,7 +234,7 @@
   <h2 class="section-title" data-i18n="feat_title">Travel smarter,<br>explore deeper</h2>
   <p class="section-sub" data-i18n="feat_sub">Built for curious travellers who want the stories behind the sights — without crowds or fixed schedules.</p>
   <div class="features-grid">
-    <div class="feature-card wide" style="background:var(--blue);">
+    <div class="feature-card" style="background:var(--blue);">
       <div class="feature-icon" style="background:rgba(255,255,255,0.15);"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
       <div class="feature-title" style="color:white;" data-i18n="f4_title">AI Generator</div>
       <p class="feature-desc" style="color:rgba(255,255,255,0.7);" data-i18n="f4_desc">Use AI to generate a custom audio guide for any place you want to visit — in seconds, in your language.</p>
@@ -261,22 +253,6 @@
       <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
       <div class="feature-title" data-i18n="f3_title">Multiple languages</div>
       <p class="feature-desc" data-i18n="f3_desc">Audio guides available in English, Spanish and Catalan — every visitor feels at home in any city.</p>
-    </div>
-  </div>
-
-  <!-- SCREENSHOT CAROUSEL -->
-  <div class="carousel">
-    <div class="carousel-item">
-      <div class="shot-frame"><img src="assets/screenshot-cities.jpg" alt="Select a city in the Rutlu app"></div>
-      <p data-i18n="shot1_caption">Pick your city</p>
-    </div>
-    <div class="carousel-item">
-      <div class="shot-frame"><img src="assets/screenshot-sagrada.jpg" alt="Sagrada Família audio guide stops"></div>
-      <p data-i18n="shot2_caption">Follow the route stop by stop</p>
-    </div>
-    <div class="carousel-item">
-      <div class="shot-frame"><img src="assets/screenshot-forbidden.jpg" alt="Forbidden City audio guide stops"></div>
-      <p data-i18n="shot3_caption">Listen and discover the story</p>
     </div>
   </div>
 
@@ -476,3 +452,4 @@ if (['ca','es'].includes(browserLang)) setLang(browserLang);
 </script>
 </body>
 </html>
+
